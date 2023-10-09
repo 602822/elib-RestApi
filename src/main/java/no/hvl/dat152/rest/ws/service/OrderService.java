@@ -69,7 +69,7 @@ public class OrderService {
 
     public Order updateOrder(Order order, Long id) throws OrderNotFoundException {
 
-        // TODO
+
         Optional<Order> orderFromRepo = orderRepository.findById(id);
 
         if (orderFromRepo.isEmpty()) {

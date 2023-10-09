@@ -35,10 +35,18 @@ public class BookService {
 	
 	public Book updateBook(Book book, String isbn) 
 			throws BookNotFoundException, UpdateBookFailedException {
+		try {
+
+		Book book1 = findByISBN(isbn);
+		book1.setIsbn(isbn);
+		bookRepository.save(book);
+			return book;
+
+		} catch (BookNotFoundException e) {
+			throw new BookNotFoundException("Book with isbn: " + isbn + " could not be found");
+		}
 		
-		// TODO
-		
-		return null;
+
 	}
 	
 	public List<Book> findAll(){
@@ -71,15 +79,16 @@ public class BookService {
 	
 	public Set<Author> findAuthorsByBookISBN(String isbn) throws BookNotFoundException{
 		
-		// TODO
+		Book book = bookRepository.findBookByISBN(isbn);
+		Set<Author> authors = book.getAuthors();
 		
-		return null;
+		return authors;
 		
 	}
 	
 	public void deleteByISBN(String isbn) throws BookNotFoundException {
-		
-		// TODO
+		Book book = bookRepository.findBookByISBN(isbn);
+		bookRepository.delete(book);
 
 	}
 	
